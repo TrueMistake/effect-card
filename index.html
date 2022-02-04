@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        *,*:before,
+        *:after{
+            box-sizing: border-box;
+            --color1: rgb(0, 231, 255);
+            --color2: rgb(255, 0, 231);
+        }
+        body{
+            margin: 0;
+            padding: 0;
+        }
+        .item{
+            position: relative;
+            width: 200px;
+            height: 300px;
+            border-radius: 10px;
+            border: 1px solid;
+            margin: 20px;
+        }
+        .card{
+            position: absolute;
+            animation: none;
+            background-image: linear-gradient(
+                    110deg,
+                    transparent 25%,
+                    var(--color1) 48%,
+                    var(--color2) 52%,
+                    transparent 75%
+            );
+            background-position: 50% 50%;
+            background-size: 250% 250%;
+            filter: brightness(.66) contrast(1.33);
+            background-repeat: no-repeat;
+            opacity: 0;
+            mix-blend-mode: color-dodge;
+            width: 200px;
+            height: 300px;
+            z-index: 2;
+        }
+        .card:after{
+            content: "";
+            opacity: 1;
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            top: 0;
+            background-repeat: no-repeat;
+            background-image: url("https://assets.codepen.io/13471/sparkles.gif"),
+            url(https://assets.codepen.io/13471/holo.png),
+            linear-gradient(125deg, #ff008450 15%, #fca40040 30%, #ffff0030 40%, #00ff8a20 60%, #00cfff40 70%, #cc4cfa50 85%);
+            background-position: 50% 50%;
+            background-size: 160%;
+            background-blend-mode: overlay;
+            z-index: 2;
+            filter: brightness(1) contrast(1);
+            transition: all .33s ease;
+            mix-blend-mode: saturation;
+            opacity: .75;
+        }
+        .item:hover .card{
+            opacity: .75;
+            filter: brightness(1) contrast(1);
+            transition: box-shadow 0.1s ease-out;
+            box-shadow:
+                    -20px -20px 30px -25px var(--color1),
+                    20px 20px 30px -25px var(--color2),
+                    -7px -7px 10px -5px var(--color1),
+                    7px 7px 10px -5px var(--color2),
+                    0 0 13px 4px rgba(255,255,255,0.3),
+                    0 55px 35px -20px rgba(0, 0, 0, 0.5);
+        }
+        .item:hover .card:after{
+            filter: brightness(1) contrast(1);;
+            opacity: 1;
+        }
+        .img{
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('https://cdn.finnflare.com/upload/resize_cache/full_size/FAB/910/454_700_2/FAB110223_910_20.jpg?cdn=1634195463');
+            background-position: 50% 50%;
+            background-size: 160%;
+            background-blend-mode: overlay;
+            z-index: 1;
+            filter: brightness(1) contrast(1);
+            transition: all .33s ease;
+            mix-blend-mode: color-dodge;
+            opacity: 1;
+        }
+        .item:hover .img{
+            filter: brightness(1) contrast(1);;
+            opacity: .75;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="item">
+        <div class="card"></div>
+        <div class="img"></div>
+    </div>
+
+    <script>
+        const card = document.querySelectorAll('.card');
+
+        card.forEach(item => {
+            item.addEventListener('mousemove', function (e) {
+                const pos = {x: e.layerX, y: e.layerY};
+                const width = item.clientWidth;
+                const proc = width / 100;
+                const position = pos.x / proc;
+
+                item.style.backgroundPositionX = `${position}%`
+            })
+        })
+    </script>
+</body>
+</html>
